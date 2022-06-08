@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myUsers {
+            background-color: white;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .demo {
+            padding: 10px;
+        }
+
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            margin: auto;
+        }
+
+        .styled-table thead tr {
+            background-color: #000000;
+            color: #ffffff;
+            text-align: left;
+
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .btn {
+            padding: 5px;
+        }
+
+        .del {
+            background-color: red;
+            border: 1px solid red;
+            margin-top: 7px;
+            margin-left: 50px;
+            color: black;
+            font-size: 15px;
+            border-radius: 5px;
+            padding: 3px;
+        }
+
+        #myBtn {
+            background-color: #000000;
+            width: 130px;
+            height: 40px;
+            border-radius: 7%;
+            color: white;
+            margin-left: 610px;
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+
+        #deletBtn {
+            background-color: #077516;
+            margin: 30px;
+            color: white;
+            border: 1px solid green;
+            width: 80px;
+            height: 30px;
+
+        }
+
+        #cansel {
+            background-color: red;
+            margin: 30px;
+            color: white;
+            border: 1px solid red;
+            width: 80px;
+            height: 30px;
+        }
+
+        .edit {
+            background-color: rgb(6, 179, 14);
+            border: 1px solid rgb(60, 179, 13);
+            margin-top: 7px;
+            margin-left: 50px;
+            color: black;
+            font-size: 15px;
+            border-radius: 5px;
+            padding: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="myBtn">Add Student</button>
+
+    <table class="styled-table">
+        <caption style="margin-bottom: 10px; font-size: larger;">COURSE TABLE</caption>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Phone</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+
+        </tbody>
+    </table>
+    <!-- add modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <input type="text" name="name" class="names" placeholder="name">
+            <input type="number" name="age" class="ages" placeholder="age">
+            <select name="course" id="course" class="selects">
+                <option value="js">Js</option>
+                <option value="react">React</option>
+                <option value="Html">Html</option>
+                <option value="C++">C++</option>
+            </select>
+            <input type="text" name="phone" class="phones" placeholder="phone">
+            <button id="send">send</button>
+        </div>
+    </div>
+    <!-- edit modal -->
+    <div id="editModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <input type="text" name="name" class="enames" placeholder="name">
+            <input type="number" name="age" class="eages" placeholder="age">
+            <select name="course" id="course" class="eselects">
+                <option value="js">Js</option>
+                <option value="react">React</option>
+                <option value="Html">Html</option>
+                <option value="C++">C++</option>
+            </select>
+            <input type="text" name="phone" class="ephones" placeholder="phone">
+            <button id="editBtn">edit</button>
+        </div>
+    </div>
+    <div id="deletModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Are you want delete this user</h3>
+            <button id="deletBtn">delete</button>
+            <button id="cansel">Cansel</button>
+        </div>
+    </div>
+
+    <script>
+        const tbody = document.querySelector(".tbody");
+
+        // add modal
+        var modal = document.getElementById("myModal");
+
+        var btn = document.getElementById("myBtn");
+
+        var send = document.querySelector("#send");
+
+        var span = document.getElementsByClassName("close")[0];
+
+        let name = document.querySelector(".names");
+        let age = document.querySelector(".ages");
+        let select = document.querySelector(".selects");
+        let phone = document.querySelector(".phones");
+
+        // edit modal
+
+        let editName = document.querySelector(".enames");
+        let editAge = document.querySelector(".eages");
+        let editSelect = document.querySelector(".eselects");
+        let editPhone = document.querySelector(".ephones");
+
+        var editModal = document.getElementById("editModal");
+        var editBtn = document.querySelector("#editBtn");
+        var spanEdit = document.getElementsByClassName("close")[1];
+
+        // delete modal
+        var deleteModal = document.getElementById("deletModal");
+        var deleteBtn = document.querySelector("#deletBtn");
+        var spanDelete = document.getElementsByClassName("close")[2];
+        var cansel = document.querySelector("#cansel");
+
+        btn.onclick = function () {
+            name.value = "";
+            age.value = "";
+            select.value = "";
+            phone.value = "";
+            modal.style.display = "block";
+        };
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+        spanEdit.onclick = function () {
+            editModal.style.display = "none";
+        };
+        spanDelete.onclick = function () {
+            deleteModal.style.display = "none";
+        };
+        cansel.onclick = function () {
+            deleteModal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        const postUser = async (user) => {
+            try {
+                const response = await fetch(
+                    "https://629720b714e756fe3b2960b0.mockapi.io/courseTable", {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(user),
+                    }
+                );
+                window.location.reload();
+                modal.style.display = "none";
+            } catch (error) {}
+        };
+
+        const deleteUser = async (id) => {
+            try {
+                const response = await fetch(
+                    `https://629720b714e756fe3b2960b0.mockapi.io/courseTable/${id}`, {
+                        method: "DELETE",
+                    }
+                );
+
+                window.location.reload();
+                deleteModal.style.display = "none";
+            } catch (error) {}
+        };
+
+        const putUser = async (id, editUser) => {
+            try {
+                const response = await fetch(
+                    `https://629720b714e756fe3b2960b0.mockapi.io/courseTable/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                        },
+
+                        body: JSON.stringify(editUser),
+                    }
+                );
+                window.location.reload();
+                editModal.style.display = "none";
+            } catch (error) {}
+        };
+
+        let newId = null;
+        const getUsers = async () => {
+            try {
+                const response = await fetch(
+                    "https://629720b714e756fe3b2960b0.mockapi.io/courseTable"
+                );
+                const data = await response.json();
+                console.log(data);
+                data.forEach((elem) => {
+                    let tr = document.createElement("tr");
+                    let id = document.createElement("td");
+                    id.innerHTML = elem.id;
+                    let name = document.createElement("td");
+                    name.innerHTML = elem.name;
+                    let age = document.createElement("td");
+                    age.innerHTML = elem.age;
+                    let course = document.createElement("td");
+                    course.innerHTML = elem.course;
+                    let phone = document.createElement("td");
+                    phone.innerHTML = elem.phone;
+                    let edit = document.createElement("button");
+                    edit.innerText = "edit";
+                    edit.setAttribute("class", "edit");
+                    edit.onclick = () => {
+                        editName.value = elem.name;
+                        editAge.value = elem.age;
+                        editSelect.value = elem.course;
+                        editPhone.value = elem.phone;
+                        editModal.style.display = "block";
+                        newId = elem.id;
+                    };
+                    let del = document.createElement("button");
+                    del.innerText = "delete";
+                    del.setAttribute("class", "del");
+                    del.onclick = () => {
+                        deleteModal.style.display = "block";
+                        newId = elem.id;
+                    };
+
+                    tr.appendChild(id);
+                    tr.appendChild(name);
+                    tr.appendChild(age);
+                    tr.appendChild(course);
+                    tr.appendChild(phone);
+                    tr.appendChild(edit);
+                    tr.appendChild(del);
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {}
+        };
+        getUsers();
+
+        send.onclick = () => {
+            let user = {
+                name: name.value,
+                age: +age.value,
+                course: select.value,
+                phone: phone.value,
+            };
+            postUser(user);
+        };
+        editBtn.onclick = () => {
+            let editUser = {
+                name: editName.value,
+                age: +editAge.value,
+                course: editSelect.value,
+                phone: editPhone.value,
+            };
+            putUser(newId, editUser);
+        };
+        deleteBtn.onclick = () => {
+            deleteUser(newId);
+        };
+    </script>
+
+</body>
+
+</html>
